@@ -1,0 +1,181 @@
+# Dependencies
+node_modules/
+.venv/
+.pnp/
+.pnp.js
+venv/
+env/
+ENV/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.output/
+target/
+*.class
+*.jar
+*.war
+
+# TypeScript
+*.tsbuildinfo
+.npm
+.eslintcache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.ipynb_checkpoints
+*.ipynb
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Rust
+/target/
+Cargo.lock
+**/*.rs.bk
+
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+.gradle/
+.idea/
+.classpath
+.project
+.settings/
+.springBeans
+.factorypath
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.production
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Tauri
+.tauri/
+
+# React Native
+.expo/
+android/app/debug
+android/app/release
+ios/Pods/
+ios/build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+*.xcworkspace
+project.xcworkspace
+
+# Testing files
+coverage/
+.nyc_output/
+
+# Cache
+.temp/
+.tmp/
+.cache/
+
+# Misc
+*.bak
+*.swp
+*.swo
+*~
+.vercel
+.netlify
+.firebase/
+.github/
+.gitlab/
+
+# Specific to this project
+restore.sh
+kube.sh
+mis.sh
+bitbucket-recovery-codes-ananddubey0122.txt
+access.log 

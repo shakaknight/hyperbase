@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #3ECF8E;
+  --primary-hover: #30BA7D;
+  --background-dark: #1A1A1A;
+  --background-card: #212121;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(171, 171, 171, 1);
+  --border-color: rgba(48, 48, 48, 1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Fira Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#3ECF8E] hover:bg-[#30BA7D] text-[#1A1A1A] font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-[#3ECF8E] focus:ring-offset-2 focus:ring-offset-[#212121] transition-all duration-200 ease-in-out text-sm;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-[#303030] text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-[#303030] focus:ring-offset-2 focus:ring-offset-[#212121] hover:bg-[#252525] transition-all duration-200 ease-in-out text-sm;
+  }
+  
+  .btn-danger {
+    @apply bg-[#AA5A5A] hover:bg-[#994D4D] text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-[#AA5A5A] focus:ring-offset-2 focus:ring-offset-[#212121] transition-all duration-200 ease-in-out text-sm;
+  }
+  
+  .card {
+    @apply bg-[#212121] rounded-lg border border-[#303030] shadow-lg overflow-hidden;
+  }
+
+  .input {
+    @apply px-3 py-2 bg-[#181818] border border-[#303030] rounded-md text-white w-full focus:outline-none focus:ring-1 focus:ring-[#3ECF8E] focus:border-[#3ECF8E] text-sm;
+  }
+} 

@@ -1,0 +1,157 @@
+version: '3.8'
+
+services:
+  # Admin UI
+  admin-ui:
+    build: ./admin-ui
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - database-api
+      - storage-service
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://api-gateway:8000
+
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - event-bus
+      - auth-service
+      - database-api
+      - storage-service
+      - functions
+      - vector-db
+    environment:
+      - NODE_ENV=development
+      - EVENT_BUS_URL=nats://event-bus:4222
+
+  # Auth Service
+  auth-service:
+    build: ./auth-service
+    depends_on:
+      - postgres
+      - event-bus
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_URI=postgres://postgres:postgres@postgres:5432/hyperbase
+      - EVENT_BUS_URL=nats://event-bus:4222
+      - JWT_SECRET=dev_jwt_secret_replace_in_production
+
+  # Database API
+  database-api:
+    build: ./database-api
+    depends_on:
+      - postgres
+      - mongodb
+      - event-bus
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_URI=postgres://postgres:postgres@postgres:5432/hyperbase
+      - MONGODB_URI=mongodb://mongodb:27017/hyperbase
+      - EVENT_BUS_URL=nats://event-bus:4222
+
+  # Storage Service
+  storage-service:
+    build: ./storage-service
+    depends_on:
+      - minio
+      - event-bus
+    environment:
+      - NODE_ENV=development
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - EVENT_BUS_URL=nats://event-bus:4222
+
+  # Realtime
+  realtime:
+    build: ./realtime
+    ports:
+      - "8080:8080"
+    depends_on:
+      - event-bus
+      - redis
+    environment:
+      - NODE_ENV=development
+      - EVENT_BUS_URL=nats://event-bus:4222
+      - REDIS_URI=redis://redis:6379
+
+  # Functions
+  functions:
+    build: ./functions
+    depends_on:
+      - event-bus
+    environment:
+      - NODE_ENV=development
+      - EVENT_BUS_URL=nats://event-bus:4222
+
+  # Vector DB
+  vector-db:
+    build: ./vector-db
+    depends_on:
+      - postgres
+      - event-bus
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_URI=postgres://postgres:postgres@postgres:5432/hyperbase
+      - EVENT_BUS_URL=nats://event-bus:4222
+
+  # Event Bus (NATS)
+  event-bus:
+    image: nats:2.9-alpine
+    ports:
+      - "4222:4222"
+
+  # PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=hyperbase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts/postgres:/docker-entrypoint-initdb.d
+
+  # MongoDB
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # MinIO (S3-compatible storage)
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+  minio_data: 
